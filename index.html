@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coming Soon: Market Canvas</title>
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      color: #fff;
+      /* Stock market chart background pattern */
+      background: url('ChatGPT Image May 28, 2025, 03_31_25 AM.png') no-repeat center center fixed;
+      background-size: cover;
+      position: relative;
+    }
+    .overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 1;
+    }
+    .container {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+    }
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+      letter-spacing: 2px;
+      text-shadow: 0 2px 8px #000;
+    }
+    .slideshow {
+      background: rgba(20, 20, 40, 0.7);
+      border-radius: 16px;
+      padding: 2.5rem 2.5rem 1.5rem 2.5rem;
+      box-shadow: 0 4px 32px rgba(0,0,0,0.4);
+      max-width: 900px;
+      width: 90vw;
+    }
+    .slideshow img {
+      width: 100%;
+      height: 500px;
+      object-fit: contain;
+      border-radius: 12px;
+      margin-bottom: 1rem;
+      box-shadow: 0 2px 12px #0008;
+      background: #222; /* fallback for transparent images */
+    }
+    .caption {
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+      color: #e0e0e0;
+      min-height: 2.5em;
+    }
+    .slideshow-controls {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+    }
+    .slideshow-controls button {
+      background: #1e293b;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .slideshow-controls button:hover {
+      background: #334155;
+    }
+    /* Contact Us button styles */
+    .contact-btn {
+      position: absolute;
+      top: 32px;
+      right: 48px;
+      z-index: 10;
+      background: #1e293b;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 0.7rem 1.5rem;
+      font-size: 1.1rem;
+      font-family: inherit;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #0006;
+      transition: background 0.2s;
+    }
+    .contact-btn:hover {
+      background: #334155;
+    }
+    @media (max-width: 600px) {
+      .slideshow {
+        padding: 1rem 0.5rem 0.5rem 0.5rem;
+        max-width: 95vw;
+      }
+      h1 {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a href="contact.html" class="contact-btn">Contact Us</a>
+  <div class="overlay"></div>
+  <div class="container">
+    <h1>Coming Soon: Market Canvas</h1>
+    <div class="slideshow">
+      <img id="slideshow-img" src="" alt="Slideshow image">
+      <div class="caption" id="slideshow-caption"></div>
+      <div class="slideshow-controls">
+        <button id="prev-btn" aria-label="Previous">&#8592;</button>
+        <button id="next-btn" aria-label="Next">&#8594;</button>
+      </div>
+    </div>
+  </div>
+  <script src="slideshow.js"></script>
+</body>
+</html>
