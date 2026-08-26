@@ -126,7 +126,8 @@
       background: var(--accent-soft); border-radius: 999px; padding: 4px 11px;
     }
     .project h3 { font-size: 1.35rem; font-weight: 700; }
-    .project .sub { font-size: 0.92rem; color: var(--ink-faint); margin-top: 2px; }
+    .project .stack { margin-top: 6px; font-size: 0.88rem; font-weight: 600; color: var(--accent); }
+    .project .sub { font-size: 0.92rem; color: var(--ink-faint); margin-top: 6px; }
     .project p.desc { margin-top: 12px; color: var(--ink-soft); font-size: 0.98rem; }
     .project-links { margin-top: 16px; display: flex; gap: 18px; font-size: 0.92rem; font-weight: 600; }
     .project-links a { color: var(--accent); border-bottom: 1px solid transparent; }
@@ -215,7 +216,7 @@
   <div class="stats">
     <div class="wrap stats-grid">
       <div class="stat"><div class="num">3</div><div class="label">Products shipped to production</div></div>
-      <div class="stat"><div class="num">150K+</div><div class="label">Lines of production code</div></div>
+      <div class="stat"><div class="num">10+</div><div class="label">Third-party API integrations</div></div>
       <div class="stat"><div class="num">70+</div><div class="label">Cloud &amp; edge functions deployed</div></div>
       <div class="stat"><div class="num">Full Stripe</div><div class="label">Checkout · Billing · Connect · Escrow</div></div>
     </div>
@@ -236,10 +237,11 @@
           </a>
           <div>
             <div class="project-tags">
-              <span class="tag">SaaS</span><span class="tag">HTML5 Canvas</span><span class="tag">Firebase</span><span class="tag">Stripe Connect</span>
+              <span class="tag">SaaS</span><span class="tag">Marketplace</span><span class="tag">Real-time collaboration</span>
             </div>
             <h3>MarketCanvas</h3>
-            <div class="sub">Financial charting, marketplace &amp; education platform · 112K+ LOC</div>
+            <div class="stack">JavaScript · HTML5 Canvas · Node.js Cloud Functions · Firebase (Firestore, Realtime DB, Auth, Storage) · Stripe (Checkout, Billing, Connect) · Resend</div>
+            <div class="sub">Financial charting, marketplace &amp; education platform</div>
             <p class="desc">
               A platform where traders draw, share, and sell candlestick chart patterns. Built on a
               custom HTML5 Canvas engine with real-time multi-user collaboration, a two-sided
@@ -258,10 +260,11 @@
           </a>
           <div>
             <div class="project-tags">
-              <span class="tag">Marketplace</span><span class="tag">React</span><span class="tag">Supabase</span><span class="tag">Stripe Escrow</span>
+              <span class="tag">Marketplace</span><span class="tag">Escrow payments</span><span class="tag">Social verification</span>
             </div>
             <h3>ClipExchange</h3>
-            <div class="sub">Two-sided creator content marketplace · 18K+ LOC</div>
+            <div class="stack">React · Tailwind CSS · Vite · Supabase (PostgreSQL, Auth, Storage, Realtime) · Deno Edge Functions · Stripe (Payments, Connect) · Apify API</div>
+            <div class="sub">Two-sided creator content marketplace</div>
             <p class="desc">
               A marketplace connecting brands with verified social media creators. Escrow-style
               payments with Stripe manual capture protect buyers until creators deliver, Instagram
@@ -280,9 +283,10 @@
           </div>
           <div>
             <div class="project-tags">
-              <span class="tag">Automation</span><span class="tag">TypeScript</span><span class="tag">PostgreSQL</span><span class="tag">AWS</span>
+              <span class="tag">Automation</span><span class="tag">Quantitative research</span><span class="tag">Broker execution</span>
             </div>
             <h3>Automated Trading System</h3>
+            <div class="stack">TypeScript · Python · PostgreSQL · Supabase (Edge Functions, pg_cron) · AWS EC2 · Polygon.io · Tradier &amp; DAS Trader APIs · SEC EDGAR</div>
             <div class="sub">Internal quantitative trading product · live capital</div>
             <p class="desc">
               A fully automated long/short trading system built on statistical edge from 3 years of
