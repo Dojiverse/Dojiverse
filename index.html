@@ -16,24 +16,29 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --ink: #111827;
-      --ink-soft: #4b5563;
-      --ink-faint: #6b7280;
+      --ink: #0f172a;
+      --ink-soft: #475569;
+      --ink-faint: #64748b;
       --bg: #ffffff;
       --bg-alt: #f8fafc;
-      --line: #e5e7eb;
-      --accent: #1e293b;
-      --accent-hover: #334155;
-      --accent-soft: #eef2f7;
+      --line: #e2e8f0;
+      --accent: #059669;
+      --accent-bright: #10b981;
+      --accent-soft: #ecfdf5;
+      --red: #ef4444;
+      --dark: #0f172a;
+      --dark-hover: #1e293b;
+      --font-display: 'Space Grotesk', 'Inter', sans-serif;
+      --font-body: 'Inter', -apple-system, 'Segoe UI', Arial, sans-serif;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
-      font-family: 'Inter', -apple-system, 'Segoe UI', Arial, sans-serif;
+      font-family: var(--font-body);
       color: var(--ink);
       background: var(--bg);
       line-height: 1.6;
@@ -41,56 +46,102 @@
     }
     img { max-width: 100%; display: block; }
     a { color: inherit; text-decoration: none; }
+    h1, h2, h3, .num, .brand { font-family: var(--font-display); }
     .wrap { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
 
-    /* Nav */
+    /* ---------- Nav ---------- */
     header {
       position: sticky; top: 0; z-index: 50;
-      background: rgba(255,255,255,0.92);
-      backdrop-filter: blur(8px);
+      background: rgba(255,255,255,0.9);
+      backdrop-filter: blur(10px);
       border-bottom: 1px solid var(--line);
     }
-    .nav {
-      display: flex; align-items: center; justify-content: space-between;
-      height: 64px;
-    }
-    .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.15rem; letter-spacing: 0.5px; }
+    .nav { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.2rem; letter-spacing: 0.5px; }
     .brand img { height: 34px; width: 34px; object-fit: contain; }
     .nav-links { display: flex; gap: 28px; font-size: 0.92rem; font-weight: 500; color: var(--ink-soft); }
+    .nav-links a { position: relative; padding: 4px 0; }
+    .nav-links a::after {
+      content: ''; position: absolute; left: 0; bottom: -2px; height: 2px; width: 0;
+      background: var(--accent-bright); transition: width 0.25s ease;
+    }
     .nav-links a:hover { color: var(--ink); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-right { display: flex; align-items: center; gap: 12px; }
     .nav-cta {
-      background: var(--accent); color: #fff; font-size: 0.88rem; font-weight: 600;
-      padding: 8px 16px; border-radius: 8px; transition: background 0.2s;
+      background: var(--dark); color: #fff; font-size: 0.88rem; font-weight: 600;
+      padding: 8px 16px; border-radius: 8px; transition: background 0.2s, transform 0.2s;
     }
-    .nav-cta:hover { background: var(--accent-hover); }
-    @media (max-width: 640px) { .nav-links { display: none; } }
+    .nav-cta:hover { background: var(--dark-hover); transform: translateY(-1px); }
 
-    /* Hero */
-    .hero { padding: 88px 0 64px; }
-    .hero-kicker {
-      display: inline-block; font-size: 0.8rem; font-weight: 600; letter-spacing: 1.2px;
-      text-transform: uppercase; color: var(--ink-faint);
-      border: 1px solid var(--line); border-radius: 999px; padding: 4px 14px; margin-bottom: 22px;
+    .menu-btn {
+      display: none; background: none; border: none; cursor: pointer; padding: 8px;
+      flex-direction: column; gap: 5px;
     }
-    .hero h1 { font-size: clamp(2.1rem, 5vw, 3.2rem); font-weight: 800; letter-spacing: -0.02em; line-height: 1.15; max-width: 720px; }
-    .hero p { margin-top: 20px; font-size: 1.12rem; color: var(--ink-soft); max-width: 640px; }
-    .hero-ctas { margin-top: 32px; display: flex; gap: 14px; flex-wrap: wrap; }
+    .menu-btn span { display: block; width: 22px; height: 2px; background: var(--ink); border-radius: 2px; transition: transform 0.25s, opacity 0.25s; }
+    .menu-btn.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .menu-btn.open span:nth-child(2) { opacity: 0; }
+    .menu-btn.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none; border-top: 1px solid var(--line); background: #fff;
+      padding: 8px 24px 16px;
+    }
+    .mobile-menu.open { display: block; }
+    .mobile-menu a {
+      display: block; padding: 12px 4px; font-weight: 600; font-size: 1rem;
+      color: var(--ink-soft); border-bottom: 1px solid var(--line);
+    }
+    .mobile-menu a:last-child { border-bottom: none; }
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .menu-btn { display: flex; }
+    }
+
+    /* ---------- Hero ---------- */
+    .hero { position: relative; padding: 96px 0 80px; overflow: hidden; }
+    #hero-canvas {
+      position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0;
+      opacity: 0.6;
+      -webkit-mask-image: linear-gradient(100deg, rgba(0,0,0,0.15) 25%, rgba(0,0,0,0.9) 70%);
+      mask-image: linear-gradient(100deg, rgba(0,0,0,0.15) 25%, rgba(0,0,0,0.9) 70%);
+    }
+    .hero .wrap { position: relative; z-index: 1; }
+    .hero-kicker {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 0.78rem; font-weight: 600; letter-spacing: 1.2px;
+      text-transform: uppercase; color: var(--accent);
+      border: 1px solid #a7f3d0; background: var(--accent-soft);
+      border-radius: 999px; padding: 5px 14px; margin-bottom: 24px;
+    }
+    .kicker-candle { display: inline-flex; align-items: flex-end; gap: 2px; height: 12px; }
+    .kicker-candle i { display: block; width: 3px; border-radius: 1px; }
+    .kicker-candle i:nth-child(1) { height: 7px; background: var(--accent-bright); }
+    .kicker-candle i:nth-child(2) { height: 12px; background: var(--red); opacity: 0.75; }
+    .kicker-candle i:nth-child(3) { height: 9px; background: var(--accent-bright); }
+    .hero h1 {
+      font-size: clamp(2.2rem, 5.5vw, 3.4rem); font-weight: 700;
+      letter-spacing: -0.02em; line-height: 1.12; max-width: 720px;
+    }
+    .hero h1 .accent-word { color: var(--accent); }
+    .hero p { margin-top: 20px; font-size: 1.12rem; color: var(--ink-soft); max-width: 600px; }
+    .hero-ctas { margin-top: 34px; display: flex; gap: 14px; flex-wrap: wrap; }
     .btn {
       display: inline-flex; align-items: center; gap: 8px;
       padding: 12px 22px; border-radius: 10px; font-weight: 600; font-size: 0.95rem;
-      transition: all 0.2s;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s, border-color 0.2s;
     }
-    .btn-primary { background: var(--accent); color: #fff; }
-    .btn-primary:hover { background: var(--accent-hover); }
-    .btn-ghost { border: 1px solid var(--line); color: var(--ink); }
-    .btn-ghost:hover { background: var(--bg-alt); }
+    .btn-primary { background: var(--dark); color: #fff; }
+    .btn-primary:hover { background: var(--dark-hover); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(15,23,42,0.18); }
+    .btn-ghost { border: 1px solid var(--line); color: var(--ink); background: rgba(255,255,255,0.7); }
+    .btn-ghost:hover { border-color: var(--accent-bright); color: var(--accent); transform: translateY(-2px); }
 
-    /* Stats */
+    /* ---------- Stats ---------- */
     .stats { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--bg-alt); }
     .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); }
-    .stat { padding: 28px 12px; text-align: center; }
+    .stat { padding: 30px 12px; text-align: center; }
     .stat + .stat { border-left: 1px solid var(--line); }
-    .stat .num { font-size: 1.55rem; font-weight: 800; letter-spacing: -0.01em; }
+    .stat .num { font-size: 1.7rem; font-weight: 700; letter-spacing: -0.01em; color: var(--ink); }
     .stat .label { font-size: 0.82rem; color: var(--ink-faint); margin-top: 2px; }
     @media (max-width: 640px) {
       .stats-grid { grid-template-columns: repeat(2, 1fr); }
@@ -98,62 +149,113 @@
       .stat:nth-child(n+3) { border-top: 1px solid var(--line); }
     }
 
-    /* Sections */
-    section { padding: 80px 0; }
+    /* ---------- Sections ---------- */
+    section { padding: 84px 0; }
     .section-alt { background: var(--bg-alt); }
-    .section-head h2 { font-size: 1.8rem; font-weight: 800; letter-spacing: -0.01em; }
-    .section-head p { margin-top: 8px; color: var(--ink-soft); max-width: 620px; }
+    .section-head h2 {
+      display: flex; align-items: center; gap: 14px;
+      font-size: 1.9rem; font-weight: 700; letter-spacing: -0.01em;
+    }
+    .h2-candle { display: inline-flex; align-items: center; }
+    .h2-candle svg { display: block; }
+    .section-head p { margin-top: 10px; color: var(--ink-soft); max-width: 620px; }
 
-    /* Work */
-    .work-grid { margin-top: 44px; display: flex; flex-direction: column; gap: 56px; }
-    .project {
-      display: grid; grid-template-columns: 1.15fr 1fr; gap: 40px; align-items: center;
-    }
-    .project:nth-child(even) .project-media { order: 2; }
+    /* ---------- Work ---------- */
+    .work-grid { margin-top: 48px; display: flex; flex-direction: column; gap: 64px; }
+    .project { position: relative; display: grid; grid-template-columns: 1.15fr 1fr; gap: 40px; align-items: center; }
+    .project-bg { position: absolute; top: -34px; bottom: -34px; left: -24px; right: -24px; z-index: 0; pointer-events: none; }
+    .project-media-col, .project-info { position: relative; z-index: 1; }
+    .project:nth-child(even) .project-media-col { order: 2; }
     @media (max-width: 768px) {
-      .project { grid-template-columns: 1fr; gap: 20px; }
-      .project:nth-child(even) .project-media { order: 0; }
+      .project { grid-template-columns: 1fr; gap: 22px; }
+      .project:nth-child(even) .project-media-col { order: 0; }
     }
-    .project-media {
-      border: 1px solid var(--line); border-radius: 14px; overflow: hidden;
-      background: #fff; box-shadow: 0 8px 30px rgba(17,24,39,0.06);
+
+    .browser-frame {
+      display: block;
+      border: 1px solid var(--line); border-radius: 14px; overflow: hidden; background: #fff;
+      box-shadow: 0 8px 30px rgba(15,23,42,0.07);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
-    .project-media img { width: 100%; aspect-ratio: 16/10; object-fit: cover; object-position: top; }
-    .project-media img.contain { object-fit: contain; padding: 12px; }
+    .browser-frame:hover { transform: translateY(-5px); }
+    .glow-emerald:hover { box-shadow: 0 18px 44px rgba(16,185,129,0.22); }
+    .glow-indigo:hover  { box-shadow: 0 18px 44px rgba(99,102,241,0.22); }
+    .glow-amber:hover   { box-shadow: 0 18px 44px rgba(245,158,11,0.22); }
+    .browser-bar {
+      display: flex; align-items: center; gap: 10px;
+      padding: 9px 14px; background: var(--bg-alt); border-bottom: 1px solid var(--line);
+    }
+    .browser-dots { display: flex; gap: 5px; }
+    .browser-dots i { width: 9px; height: 9px; border-radius: 50%; display: block; }
+    .browser-dots i:nth-child(1) { background: #f87171; }
+    .browser-dots i:nth-child(2) { background: #fbbf24; }
+    .browser-dots i:nth-child(3) { background: #34d399; }
+    .browser-url {
+      flex: 1; text-align: center; font-size: 0.72rem; color: var(--ink-faint);
+      background: #fff; border: 1px solid var(--line); border-radius: 6px;
+      padding: 2px 10px; max-width: 260px; margin: 0 auto;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .browser-frame img { width: 100%; aspect-ratio: 16/10; object-fit: cover; object-position: top; }
+    .browser-frame img.contain { object-fit: contain; padding: 12px; }
+
     .project-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
     .tag {
-      font-size: 0.74rem; font-weight: 600; color: var(--ink-soft);
-      background: var(--accent-soft); border-radius: 999px; padding: 4px 11px;
+      font-size: 0.74rem; font-weight: 600; color: var(--accent);
+      background: var(--accent-soft); border: 1px solid #a7f3d0;
+      border-radius: 999px; padding: 4px 11px;
     }
-    .project h3 { font-size: 1.35rem; font-weight: 700; }
-    .project .stack { margin-top: 6px; font-size: 0.88rem; font-weight: 600; color: var(--accent); }
+    .project h3 { font-size: 1.4rem; font-weight: 700; }
+    .project .stack { margin-top: 8px; font-size: 0.88rem; font-weight: 600; color: var(--accent); }
     .project .sub { font-size: 0.92rem; color: var(--ink-faint); margin-top: 6px; }
     .project p.desc { margin-top: 12px; color: var(--ink-soft); font-size: 0.98rem; }
     .project-links { margin-top: 16px; display: flex; gap: 18px; font-size: 0.92rem; font-weight: 600; }
-    .project-links a { color: var(--accent); border-bottom: 1px solid transparent; }
+    .project-links a { color: var(--accent); border-bottom: 1px solid transparent; transition: border-color 0.2s; }
     .project-links a:hover { border-bottom-color: var(--accent); }
 
-    /* Services */
-    .services-grid { margin-top: 44px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; }
+    /* ---------- Services ---------- */
+    .services-grid { margin-top: 48px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; }
     @media (max-width: 700px) { .services-grid { grid-template-columns: 1fr; } }
     .service {
+      position: relative;
       background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 28px;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+      overflow: hidden;
     }
+    .service:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent-bright);
+      box-shadow: 0 14px 34px rgba(16,185,129,0.12);
+    }
+    .service-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+    .service-icon {
+      width: 44px; height: 44px; border-radius: 11px;
+      background: var(--accent-soft); color: var(--accent);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .service-icon svg { width: 22px; height: 22px; }
+    .service-index {
+      font-family: var(--font-display); font-size: 1.6rem; font-weight: 700;
+      color: var(--line); letter-spacing: -0.02em;
+      transition: color 0.25s ease;
+    }
+    .service:hover .service-index { color: #a7f3d0; }
     .service h3 { font-size: 1.08rem; font-weight: 700; }
     .service p { margin-top: 8px; font-size: 0.94rem; color: var(--ink-soft); }
 
-    /* About */
-    .about-inner { display: grid; grid-template-columns: auto 1fr; gap: 36px; align-items: start; }
+    /* ---------- About ---------- */
+    .about-inner { display: grid; grid-template-columns: auto 1fr; gap: 36px; align-items: start; margin-top: 36px; }
     @media (max-width: 640px) { .about-inner { grid-template-columns: 1fr; } }
     .about-logo {
       width: 120px; height: 120px; border: 1px solid var(--line); border-radius: 20px;
-      background: #fff; display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(160deg, #fff 55%, var(--accent-soft));
+      display: flex; align-items: center; justify-content: center;
     }
     .about-logo img { width: 84px; height: 84px; object-fit: contain; }
     .about-text p { color: var(--ink-soft); max-width: 640px; }
     .about-text p + p { margin-top: 14px; }
 
-    /* Contact */
+    /* ---------- Contact ---------- */
     .contact-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-top: 40px; }
     @media (max-width: 700px) { .contact-inner { grid-template-columns: 1fr; } }
     .contact-side p { color: var(--ink-soft); }
@@ -164,13 +266,17 @@
     input, textarea {
       width: 100%; padding: 11px 14px; border: 1px solid var(--line); border-radius: 10px;
       font-family: inherit; font-size: 0.95rem; background: #fff; color: var(--ink);
+      transition: border-color 0.2s, box-shadow 0.2s;
     }
-    input:focus, textarea:focus { outline: 2px solid var(--accent); outline-offset: 0; border-color: transparent; }
+    input:focus, textarea:focus {
+      outline: none; border-color: var(--accent-bright);
+      box-shadow: 0 0 0 3px rgba(16,185,129,0.15);
+    }
     textarea { min-height: 130px; resize: vertical; }
     .success-message { color: #15803d; font-size: 0.92rem; }
     .error-message { color: #b91c1c; font-size: 0.92rem; }
 
-    /* Footer */
+    /* ---------- Footer ---------- */
     footer { border-top: 1px solid var(--line); padding: 34px 0; }
     .footer-inner {
       display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;
@@ -178,6 +284,19 @@
     }
     .footer-links { display: flex; gap: 20px; }
     .footer-links a:hover { color: var(--ink); }
+
+    /* ---------- Scroll reveal ---------- */
+    .reveal {
+      opacity: 0; transform: translateY(26px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+      transition-delay: var(--d, 0s);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .reveal { opacity: 1; transform: none; transition: none; }
+      .browser-frame, .service, .btn, .nav-cta { transition: none; }
+    }
   </style>
 </head>
 <body>
@@ -193,14 +312,29 @@
         <a href="#services">Services</a>
         <a href="#about">About</a>
       </nav>
-      <a href="#contact" class="nav-cta">Start a project</a>
+      <div class="nav-right">
+        <a href="#contact" class="nav-cta">Start a project</a>
+        <button class="menu-btn" id="menu-btn" aria-label="Toggle menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
     </div>
+    <nav class="mobile-menu" id="mobile-menu">
+      <a href="#work">Work</a>
+      <a href="#services">Services</a>
+      <a href="#about">About</a>
+      <a href="#contact">Start a project</a>
+    </nav>
   </header>
 
   <section class="hero">
+    <canvas id="hero-canvas" aria-hidden="true"></canvas>
     <div class="wrap">
-      <span class="hero-kicker">Product Development Studio</span>
-      <h1>We build production software, end to end.</h1>
+      <span class="hero-kicker">
+        <span class="kicker-candle"><i></i><i></i><i></i></span>
+        Product Development Studio
+      </span>
+      <h1>We build production software, <span class="accent-word">end to end</span>.</h1>
       <p>
         DOJi is the development studio behind MarketCanvas, ClipExchange, and a fully automated
         trading system. We take products from architecture to launch and beyond: frontend, backend,
@@ -215,27 +349,44 @@
 
   <div class="stats">
     <div class="wrap stats-grid">
-      <div class="stat"><div class="num">3</div><div class="label">Products shipped to production</div></div>
-      <div class="stat"><div class="num">10+</div><div class="label">Third-party API integrations</div></div>
-      <div class="stat"><div class="num">70+</div><div class="label">Cloud &amp; edge functions deployed</div></div>
-      <div class="stat"><div class="num">Full Stripe</div><div class="label">Checkout · Billing · Connect · Escrow</div></div>
+      <div class="stat"><div class="num" data-count="3">0</div><div class="label">Products in production</div></div>
+      <div class="stat"><div class="num" data-count="70" data-suffix="+">0</div><div class="label">Cloud &amp; edge functions deployed</div></div>
+      <div class="stat"><div class="num" data-count="10" data-suffix="+">0</div><div class="label">Third-party API integrations</div></div>
+      <div class="stat"><div class="num" data-count="4">0</div><div class="label">Stripe products: Checkout · Billing · Connect · Escrow</div></div>
     </div>
   </div>
 
   <section id="work">
     <div class="wrap">
-      <div class="section-head">
-        <h2>Our work</h2>
+      <div class="section-head reveal">
+        <h2>
+          <span class="h2-candle" aria-hidden="true">
+            <svg width="20" height="26" viewBox="0 0 20 26" fill="none">
+              <line x1="4" y1="1" x2="4" y2="25" stroke="#10b981" stroke-width="1.6"/>
+              <rect x="1" y="8" width="6" height="10" rx="1" fill="#10b981"/>
+              <line x1="15" y1="3" x2="15" y2="23" stroke="#ef4444" stroke-width="1.6" opacity="0.7"/>
+              <rect x="12" y="7" width="6" height="8" rx="1" fill="#ef4444" opacity="0.7"/>
+            </svg>
+          </span>
+          Our work
+        </h2>
         <p>Products we designed, built, and operate ourselves. Every system below runs in production.</p>
       </div>
 
       <div class="work-grid">
 
-        <div class="project">
-          <a class="project-media" href="https://www.marketcanvas.com" target="_blank" rel="noopener noreferrer">
-            <img src="assets/marketcanvas-hero.png" alt="MarketCanvas charting editor">
-          </a>
-          <div>
+        <div class="project reveal">
+          <canvas class="project-bg" id="bg-marketcanvas" aria-hidden="true"></canvas>
+          <div class="project-media-col">
+            <a class="browser-frame glow-emerald" href="https://www.marketcanvas.com" target="_blank" rel="noopener noreferrer">
+              <div class="browser-bar">
+                <div class="browser-dots"><i></i><i></i><i></i></div>
+                <div class="browser-url">marketcanvas.com</div>
+              </div>
+              <img src="assets/marketcanvas-hero.png" alt="MarketCanvas charting editor">
+            </a>
+          </div>
+          <div class="project-info">
             <div class="project-tags">
               <span class="tag">SaaS</span><span class="tag">Marketplace</span><span class="tag">Real-time collaboration</span>
             </div>
@@ -254,11 +405,18 @@
           </div>
         </div>
 
-        <div class="project">
-          <a class="project-media" href="https://www.clipexchange.com" target="_blank" rel="noopener noreferrer">
-            <img src="assets/clipexchange-hero.png" alt="ClipExchange creator marketplace">
-          </a>
-          <div>
+        <div class="project reveal">
+          <canvas class="project-bg" id="bg-clipexchange" aria-hidden="true"></canvas>
+          <div class="project-media-col">
+            <a class="browser-frame glow-indigo" href="https://www.clipexchange.com" target="_blank" rel="noopener noreferrer">
+              <div class="browser-bar">
+                <div class="browser-dots"><i></i><i></i><i></i></div>
+                <div class="browser-url">clipexchange.com</div>
+              </div>
+              <img src="assets/clipexchange-hero.png" alt="ClipExchange creator marketplace">
+            </a>
+          </div>
+          <div class="project-info">
             <div class="project-tags">
               <span class="tag">Marketplace</span><span class="tag">Escrow payments</span><span class="tag">Social verification</span>
             </div>
@@ -277,11 +435,18 @@
           </div>
         </div>
 
-        <div class="project">
-          <div class="project-media">
-            <img src="assets/quant-architecture.png" alt="Quantitative trading system architecture" class="contain">
+        <div class="project reveal">
+          <canvas class="project-bg" id="bg-quant" aria-hidden="true"></canvas>
+          <div class="project-media-col">
+            <div class="browser-frame glow-amber">
+              <div class="browser-bar">
+                <div class="browser-dots"><i></i><i></i><i></i></div>
+                <div class="browser-url">internal · automated trading pipeline</div>
+              </div>
+              <img src="assets/quant-architecture.png" alt="Quantitative trading system architecture" class="contain">
+            </div>
           </div>
-          <div>
+          <div class="project-info">
             <div class="project-tags">
               <span class="tag">Automation</span><span class="tag">Quantitative research</span><span class="tag">Broker execution</span>
             </div>
@@ -303,24 +468,58 @@
 
   <section id="services" class="section-alt">
     <div class="wrap">
-      <div class="section-head">
-        <h2>What we build for clients</h2>
+      <div class="section-head reveal">
+        <h2>
+          <span class="h2-candle" aria-hidden="true">
+            <svg width="20" height="26" viewBox="0 0 20 26" fill="none">
+              <line x1="4" y1="2" x2="4" y2="24" stroke="#ef4444" stroke-width="1.6" opacity="0.7"/>
+              <rect x="1" y="9" width="6" height="9" rx="1" fill="#ef4444" opacity="0.7"/>
+              <line x1="15" y1="1" x2="15" y2="25" stroke="#10b981" stroke-width="1.6"/>
+              <rect x="12" y="6" width="6" height="12" rx="1" fill="#10b981"/>
+            </svg>
+          </span>
+          What we build for clients
+        </h2>
         <p>The same systems we build for ourselves, built for you.</p>
       </div>
       <div class="services-grid">
-        <div class="service">
+        <div class="service reveal" style="--d:.0s">
+          <div class="service-top">
+            <div class="service-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+            </div>
+            <div class="service-index">01</div>
+          </div>
           <h3>Full-stack product development</h3>
           <p>From idea to production: system architecture, frontend, backend, deployment, and post-launch operations. One team owns the whole build.</p>
         </div>
-        <div class="service">
+        <div class="service reveal" style="--d:.08s">
+          <div class="service-top">
+            <div class="service-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+            </div>
+            <div class="service-index">02</div>
+          </div>
           <h3>Marketplaces &amp; payments</h3>
           <p>Two-sided platforms with Stripe Checkout, Billing, and Connect: seller onboarding, escrow-style flows, payouts, subscriptions, and webhook infrastructure.</p>
         </div>
-        <div class="service">
+        <div class="service reveal" style="--d:.16s">
+          <div class="service-top">
+            <div class="service-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            </div>
+            <div class="service-index">03</div>
+          </div>
           <h3>Real-time &amp; data-intensive systems</h3>
           <p>Live collaboration, messaging, notifications, and analytics on PostgreSQL, Firebase, and Supabase backends with security rules written for production.</p>
         </div>
-        <div class="service">
+        <div class="service reveal" style="--d:.24s">
+          <div class="service-top">
+            <div class="service-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+            </div>
+            <div class="service-index">04</div>
+          </div>
           <h3>Automation &amp; trading infrastructure</h3>
           <p>Data pipelines, scheduled jobs, broker and market-data API integrations, and execution systems that run unattended on real money.</p>
         </div>
@@ -330,8 +529,18 @@
 
   <section id="about">
     <div class="wrap">
-      <div class="section-head"><h2>About DOJi</h2></div>
-      <div class="about-inner" style="margin-top: 36px;">
+      <div class="section-head reveal">
+        <h2>
+          <span class="h2-candle" aria-hidden="true">
+            <svg width="20" height="26" viewBox="0 0 20 26" fill="none">
+              <line x1="10" y1="1" x2="10" y2="25" stroke="#10b981" stroke-width="1.6"/>
+              <rect x="6" y="11" width="8" height="3" rx="1" fill="#10b981"/>
+            </svg>
+          </span>
+          About DOJi
+        </h2>
+      </div>
+      <div class="about-inner reveal">
         <div class="about-logo"><img src="assets/doji-logo.png" alt="DOJi bear logo"></div>
         <div class="about-text">
           <p>
@@ -352,12 +561,22 @@
 
   <section id="contact" class="section-alt">
     <div class="wrap">
-      <div class="section-head">
-        <h2>Start a project</h2>
+      <div class="section-head reveal">
+        <h2>
+          <span class="h2-candle" aria-hidden="true">
+            <svg width="20" height="26" viewBox="0 0 20 26" fill="none">
+              <line x1="4" y1="4" x2="4" y2="22" stroke="#10b981" stroke-width="1.6"/>
+              <rect x="1" y="7" width="6" height="11" rx="1" fill="#10b981"/>
+              <line x1="15" y1="2" x2="15" y2="24" stroke="#10b981" stroke-width="1.6"/>
+              <rect x="12" y="5" width="6" height="13" rx="1" fill="#10b981"/>
+            </svg>
+          </span>
+          Start a project
+        </h2>
         <p>Tell us what you're building. We'll reply with an honest read on scope, timeline, and whether we're the right fit.</p>
       </div>
       <div class="contact-inner">
-        <div class="contact-side">
+        <div class="contact-side reveal">
           <p>
             Best suited for: marketplaces, SaaS products, payment integrations, real-time platforms,
             and data or trading infrastructure.
@@ -365,7 +584,7 @@
           <div class="line">Email: <a href="mailto:pedropetcov@dojiverse.com">pedropetcov@dojiverse.com</a></div>
           <div class="line">GitHub: <a href="https://github.com/Dojiverse" target="_blank" rel="noopener noreferrer">github.com/Dojiverse</a></div>
         </div>
-        <form id="contact-form" action="https://formspree.io/f/xjvnlqzq" method="POST">
+        <form id="contact-form" action="https://formspree.io/f/xjvnlqzq" method="POST" class="reveal" style="--d:.1s">
           <div>
             <label for="name">Name</label>
             <input type="text" id="name" name="name" required>
@@ -397,29 +616,524 @@
   </footer>
 
   <script>
-    const form = document.getElementById('contact-form');
-    const status = document.getElementById('form-status');
-    form.addEventListener('submit', async function (e) {
-      e.preventDefault();
-      const data = new FormData(form);
-      try {
-        const res = await fetch(form.action, {
-          method: 'POST',
-          body: data,
-          headers: { 'Accept': 'application/json' }
+    (function () {
+      var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      /* ---------- Mobile nav ---------- */
+      var menuBtn = document.getElementById('menu-btn');
+      var mobileMenu = document.getElementById('mobile-menu');
+      menuBtn.addEventListener('click', function () {
+        var open = mobileMenu.classList.toggle('open');
+        menuBtn.classList.toggle('open', open);
+        menuBtn.setAttribute('aria-expanded', open);
+      });
+      mobileMenu.querySelectorAll('a').forEach(function (a) {
+        a.addEventListener('click', function () {
+          mobileMenu.classList.remove('open');
+          menuBtn.classList.remove('open');
+          menuBtn.setAttribute('aria-expanded', 'false');
         });
-        if (res.ok) {
-          status.textContent = "Thanks for reaching out. We'll get back to you within one business day.";
-          status.className = 'success-message';
-          form.reset();
-        } else {
-          throw new Error();
-        }
-      } catch {
-        status.textContent = 'Something went wrong sending your message. Email us directly instead.';
-        status.className = 'error-message';
+      });
+
+      /* ---------- Scroll reveals ---------- */
+      var revealEls = document.querySelectorAll('.reveal');
+      if (reducedMotion || !('IntersectionObserver' in window)) {
+        revealEls.forEach(function (el) { el.classList.add('visible'); });
+      } else {
+        var revealObserver = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              revealObserver.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.12 });
+        revealEls.forEach(function (el) { revealObserver.observe(el); });
       }
-    });
+
+      /* ---------- Stat count-ups ---------- */
+      var nums = document.querySelectorAll('.num[data-count]');
+      function animateCount(el) {
+        var target = parseInt(el.dataset.count, 10);
+        var suffix = el.dataset.suffix || '';
+        if (reducedMotion) { el.textContent = target + suffix; return; }
+        var duration = 1200, start = null;
+        function tick(ts) {
+          if (!start) start = ts;
+          var p = Math.min((ts - start) / duration, 1);
+          var eased = 1 - Math.pow(1 - p, 3);
+          el.textContent = Math.round(eased * target) + (p === 1 ? suffix : '');
+          if (p < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+      }
+      if ('IntersectionObserver' in window) {
+        var numObserver = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              animateCount(entry.target);
+              numObserver.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.5 });
+        nums.forEach(function (el) { numObserver.observe(el); });
+      } else {
+        nums.forEach(animateCount);
+      }
+
+      /* ---------- Hero canvas: candlesticks drawing themselves ---------- */
+      var canvas = document.getElementById('hero-canvas');
+      var ctx = canvas.getContext('2d');
+      var candles = [], trendPoints = [];
+      var candleW = 9, candleGap = 6;
+      var revealPerFrame = 0.35;   /* candles revealed per frame */
+      var progress = 0;            /* how many candles are visible */
+      var holdFrames = 0;
+      var fadeAlpha = 1;
+      var phase = 'draw';          /* draw -> trend -> hold -> fade */
+      var trendProgress = 0;
+      var rafId = null;
+
+      function sizeCanvas() {
+        var rect = canvas.parentElement.getBoundingClientRect();
+        var dpr = window.devicePixelRatio || 1;
+        canvas.width = rect.width * dpr;
+        canvas.height = rect.height * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        return rect;
+      }
+
+      function generateChart() {
+        var rect = sizeCanvas();
+        var w = rect.width, h = rect.height;
+        var n = Math.ceil(w / (candleW + candleGap)) + 1;
+        var mid = h * 0.52, range = h * 0.36;
+        var price = mid + (Math.random() - 0.5) * range * 0.4;
+        var drift = (Math.random() - 0.42) * 1.6; /* slight upward bias */
+        candles = [];
+        trendPoints = [];
+        for (var i = 0; i < n; i++) {
+          var open = price;
+          var move = (Math.random() - 0.48) * range * 0.12 + drift;
+          var close = open + move;
+          var hi = Math.max(open, close) + Math.random() * range * 0.05;
+          var lo = Math.min(open, close) - Math.random() * range * 0.05;
+          /* keep it in band */
+          var top = mid - range / 2, bot = mid + range / 2;
+          if (close < top) { close = top + Math.random() * 8; drift = Math.abs(drift); }
+          if (close > bot) { close = bot - Math.random() * 8; drift = -Math.abs(drift); }
+          candles.push({ x: i * (candleW + candleGap), open: open, close: close, hi: hi, lo: lo });
+          if (i % 4 === 0) trendPoints.push({ x: i * (candleW + candleGap) + candleW / 2, y: close });
+          price = close;
+        }
+        progress = 0; trendProgress = 0; holdFrames = 0; fadeAlpha = 1; phase = 'draw';
+      }
+
+      function drawFrame() {
+        var rect = canvas.getBoundingClientRect();
+        ctx.clearRect(0, 0, rect.width, rect.height);
+        ctx.globalAlpha = fadeAlpha;
+
+        var visible = Math.min(Math.floor(progress), candles.length);
+        for (var i = 0; i < visible; i++) {
+          var c = candles[i];
+          var up = c.close <= c.open;
+          ctx.strokeStyle = up ? 'rgba(16,185,129,0.55)' : 'rgba(239,68,68,0.45)';
+          ctx.fillStyle = up ? 'rgba(16,185,129,0.38)' : 'rgba(239,68,68,0.30)';
+          ctx.lineWidth = 1.2;
+          var cx = c.x + candleW / 2;
+          ctx.beginPath();
+          ctx.moveTo(cx, c.hi);
+          ctx.lineTo(cx, c.lo);
+          ctx.stroke();
+          var bodyTop = Math.min(c.open, c.close);
+          var bodyH = Math.max(Math.abs(c.close - c.open), 2);
+          ctx.fillRect(c.x, bodyTop, candleW, bodyH);
+        }
+
+        /* trend line sketching over the chart */
+        if (phase === 'trend' || phase === 'hold' || phase === 'fade') {
+          var pts = Math.min(Math.floor(trendProgress), trendPoints.length);
+          if (pts > 1) {
+            ctx.strokeStyle = 'rgba(5,150,105,0.7)';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(trendPoints[0].x, trendPoints[0].y);
+            for (var j = 1; j < pts; j++) ctx.lineTo(trendPoints[j].x, trendPoints[j].y);
+            ctx.stroke();
+            /* pen dot at the tip */
+            if (phase === 'trend') {
+              var tip = trendPoints[pts - 1];
+              ctx.fillStyle = 'rgba(5,150,105,0.9)';
+              ctx.beginPath();
+              ctx.arc(tip.x, tip.y, 3, 0, Math.PI * 2);
+              ctx.fill();
+            }
+          }
+        }
+        ctx.globalAlpha = 1;
+      }
+
+      function loop() {
+        if (phase === 'draw') {
+          progress += revealPerFrame;
+          if (progress >= candles.length) phase = 'trend';
+        } else if (phase === 'trend') {
+          trendProgress += 0.22;
+          if (trendProgress >= trendPoints.length) phase = 'hold';
+        } else if (phase === 'hold') {
+          holdFrames++;
+          if (holdFrames > 420) phase = 'fade'; /* ~7s */
+        } else if (phase === 'fade') {
+          fadeAlpha -= 0.02;
+          if (fadeAlpha <= 0) { generateChart(); }
+        }
+        drawFrame();
+        rafId = requestAnimationFrame(loop);
+      }
+
+      generateChart();
+      if (reducedMotion) {
+        progress = candles.length;
+        trendProgress = trendPoints.length;
+        phase = 'hold';
+        drawFrame(); /* static final frame, no loop */
+      } else {
+        loop();
+        /* pause when hero is off-screen */
+        if ('IntersectionObserver' in window) {
+          new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) {
+                if (!rafId) rafId = requestAnimationFrame(loop);
+              } else if (rafId) {
+                cancelAnimationFrame(rafId);
+                rafId = null;
+              }
+            });
+          }).observe(canvas);
+        }
+      }
+
+      var resizeTimer;
+      window.addEventListener('resize', function () {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function () {
+          generateChart();
+          if (reducedMotion) {
+            progress = candles.length; trendProgress = trendPoints.length; phase = 'hold';
+            drawFrame();
+          }
+          sceneResizers.forEach(function (fn) { fn(); });
+        }, 150);
+      });
+
+      /* ---------- Per-project background scenes ---------- */
+      var sceneResizers = [];
+
+      function easeOutCubic(p) { return 1 - Math.pow(1 - p, 3); }
+
+      function sampleCubic(p0, p1, p2, p3, n, out) {
+        for (var i = 0; i <= n; i++) {
+          var t = i / n, u = 1 - t;
+          out.push([
+            u*u*u*p0[0] + 3*u*u*t*p1[0] + 3*u*t*t*p2[0] + t*t*t*p3[0],
+            u*u*u*p0[1] + 3*u*u*t*p1[1] + 3*u*t*t*p2[1] + t*t*t*p3[1]
+          ]);
+        }
+      }
+
+      /* Generic scene runner: sizes canvas, runs draw(t) while visible, static frame for reduced motion */
+      function runScene(id, build, draw) {
+        var cv = document.getElementById(id);
+        if (!cv) return;
+        var c = cv.getContext('2d');
+        var scene = null, raf = null, start = null, W = 0, H = 0;
+
+        function size() {
+          var r = cv.getBoundingClientRect();
+          var dpr = window.devicePixelRatio || 1;
+          W = r.width; H = r.height;
+          cv.width = W * dpr; cv.height = H * dpr;
+          c.setTransform(dpr, 0, 0, dpr, 0, 0);
+          scene = build(W, H);
+          if (reducedMotion) { c.clearRect(0, 0, W, H); draw(c, scene, 0, W, H, true); }
+        }
+        sceneResizers.push(size);
+        size();
+        if (reducedMotion) return;
+
+        function frame(ts) {
+          if (!start) start = ts;
+          c.clearRect(0, 0, W, H);
+          draw(c, scene, (ts - start) / 1000, W, H, false);
+          raf = requestAnimationFrame(frame);
+        }
+        /* activate only when the section itself is properly on screen;
+           restart the timeline on every entry, blank the canvas on exit */
+        new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              start = null;
+              if (raf) cancelAnimationFrame(raf);
+              raf = requestAnimationFrame(frame);
+            } else if (raf) {
+              cancelAnimationFrame(raf); raf = null;
+              c.clearRect(0, 0, W, H);
+            }
+          });
+        }, { threshold: 0.3 }).observe(cv);
+      }
+
+      function drawArrowhead(c, tip, prev, len, color, lw) {
+        var ang = Math.atan2(tip[1] - prev[1], tip[0] - prev[0]);
+        c.strokeStyle = color; c.lineWidth = lw; c.lineCap = 'round';
+        [ang + 2.5, ang - 2.5].forEach(function (a) {
+          c.beginPath();
+          c.moveTo(tip[0], tip[1]);
+          c.lineTo(tip[0] + Math.cos(a) * len, tip[1] + Math.sin(a) * len);
+          c.stroke();
+        });
+      }
+
+      function drawPolyProgress(c, pts, p, color, lw) {
+        var n = Math.max(2, Math.floor(pts.length * p));
+        c.strokeStyle = color; c.lineWidth = lw;
+        c.lineCap = 'round'; c.lineJoin = 'round';
+        c.beginPath();
+        c.moveTo(pts[0][0], pts[0][1]);
+        for (var i = 1; i < n; i++) c.lineTo(pts[i][0], pts[i][1]);
+        c.stroke();
+        return pts[n - 1];
+      }
+
+      /* rebuild scenes once images finish loading and row heights settle */
+      window.addEventListener('load', function () {
+        sceneResizers.forEach(function (fn) { fn(); });
+      });
+
+      /* --- MarketCanvas: editor shapes sketching themselves --- */
+      runScene('bg-marketcanvas', function (w, h) {
+        function place(shape, sx, sy, sw, sh) {
+          return shape.map(function (pt) { return [sx + pt[0] * sw, sy + pt[1] * sh]; });
+        }
+        var circle = [];
+        for (var a = -Math.PI / 2; a <= Math.PI * 1.5 + 0.01; a += Math.PI / 24) {
+          circle.push([0.5 + Math.cos(a) * 0.5, 0.5 + Math.sin(a) * 0.5]);
+        }
+        var trend = [[0, 0.9], [0.28, 0.55], [0.45, 0.72], [0.72, 0.25], [1, 0.35]];
+        var triangle = [[0.5, 0], [1, 1], [0, 1], [0.5, 0]];
+        var rect = [[0, 0], [1, 0], [1, 1], [0, 1], [0, 0]];
+        /* slots: corners of the row, away from the text center */
+        return {
+          shapes: [
+            { pts: place(trend,    w * 0.02, h * 0.02, w * 0.30, h * 0.30), delay: 0.0, dur: 1.6, arrow: true },
+            { pts: place(rect,     w * 0.86, h * 0.05, w * 0.10, h * 0.28), delay: 2.4, dur: 1.4 },
+            { pts: place(circle,   w * 0.44, h * 0.68, w * 0.09, w * 0.09 > h * 0.26 ? h * 0.26 : w * 0.09), delay: 4.8, dur: 1.4 },
+            { pts: place(triangle, w * 0.05, h * 0.62, w * 0.13, h * 0.32), delay: 7.2, dur: 1.4 }
+          ],
+          cycle: 11
+        };
+      }, function (c, s, t, w, h, staticMode) {
+        var tc = staticMode ? 99 : t % s.cycle;
+        var fade = staticMode ? 1 : Math.min(1, Math.max(0, (s.cycle - tc) / 0.8));
+        c.globalAlpha = 0.5 * fade;
+        s.shapes.forEach(function (sh) {
+          var p = staticMode ? 1 : Math.max(0, Math.min((tc - sh.delay) / sh.dur, 1));
+          if (p <= 0) return;
+          var tip = drawPolyProgress(c, sh.pts, easeOutCubic(p), 'rgba(16,185,129,0.55)', 2);
+          if (p < 1) {
+            /* pen cursor */
+            c.fillStyle = 'rgba(5,150,105,0.9)';
+            c.beginPath(); c.arc(tip[0], tip[1], 3, 0, Math.PI * 2); c.fill();
+          } else {
+            if (sh.arrow) {
+              drawArrowhead(c, sh.pts[sh.pts.length - 1], sh.pts[sh.pts.length - 2], 10, 'rgba(16,185,129,0.55)', 2);
+            }
+            /* selection box with handles right after drawing completes */
+            var selT = staticMode ? 0.5 : tc - sh.delay - sh.dur;
+            if (selT >= 0 && selT < 1.6) {
+              var xs = sh.pts.map(function (pt) { return pt[0]; });
+              var ys = sh.pts.map(function (pt) { return pt[1]; });
+              var x0 = Math.min.apply(null, xs) - 7, x1 = Math.max.apply(null, xs) + 7;
+              var y0 = Math.min.apply(null, ys) - 7, y1 = Math.max.apply(null, ys) + 7;
+              var selA = selT < 1.1 ? 1 : (1.6 - selT) / 0.5;
+              c.save();
+              c.globalAlpha = 0.5 * fade * selA;
+              c.strokeStyle = 'rgba(16,185,129,0.7)';
+              c.lineWidth = 1;
+              c.setLineDash([4, 4]);
+              c.strokeRect(x0, y0, x1 - x0, y1 - y0);
+              c.setLineDash([]);
+              c.fillStyle = '#10b981';
+              [[x0, y0], [x1, y0], [x0, y1], [x1, y1]].forEach(function (hnd) {
+                c.fillRect(hnd[0] - 2.5, hnd[1] - 2.5, 5, 5);
+              });
+              c.restore();
+            }
+          }
+        });
+        c.globalAlpha = 1;
+      });
+
+      /* --- ClipExchange: hand-drawn green swoosh arrows --- */
+      runScene('bg-clipexchange', function (w, h) {
+        function buildArrow(withLoop) {
+          var pts = [];
+          if (withLoop) {
+            sampleCubic([0.10, 1.00], [0.02, 0.76], [0.10, 0.62], [0.24, 0.58], 22, pts);
+            var lx = 0.185, ly = 0.52, r = 0.085;
+            for (var a = Math.PI * 0.45; a <= Math.PI * 2.5; a += Math.PI / 14) {
+              pts.push([lx + Math.cos(a) * r, ly + Math.sin(a) * r]);
+            }
+            sampleCubic(pts[pts.length - 1], [0.42, 0.40], [0.58, 0.26], [0.82, 0.08], 24, pts);
+          } else {
+            sampleCubic([0.08, 0.94], [0.42, 0.80], [0.28, 0.28], [0.85, 0.10], 40, pts);
+          }
+          return pts;
+        }
+        function place(pts, sx, sy, sw, sh, flip) {
+          return pts.map(function (pt) {
+            var x = flip ? 1 - pt[0] : pt[0];
+            return [sx + x * sw, sy + pt[1] * sh];
+          });
+        }
+        var loop = buildArrow(true), swoosh = buildArrow(false);
+        return {
+          arrows: [
+            { pts: place(loop,   w * 0.01, h * 0.16, 150, 190, false), delay: 0.0, dur: 1.8, lw: 3.5 },
+            { pts: place(swoosh, w * 0.42, h * 0.02, 120, 130, false), delay: 1.2, dur: 1.4, lw: 3 },
+            { pts: place(swoosh, w * 0.86, h * 0.55, 120, 150, true),  delay: 2.2, dur: 1.4, lw: 3 },
+            { pts: place(loop,   w * 0.45, h * 0.60, 120, 150, true),  delay: 3.2, dur: 1.8, lw: 3 }
+          ],
+          cycle: 10
+        };
+      }, function (c, s, t, w, h, staticMode) {
+        var tc = staticMode ? 99 : t % s.cycle;
+        var fade = staticMode ? 1 : Math.min(1, Math.max(0, (s.cycle - tc) / 0.8));
+        c.globalAlpha = 0.45 * fade;
+        s.arrows.forEach(function (a) {
+          var p = staticMode ? 1 : Math.max(0, Math.min((tc - a.delay) / a.dur, 1));
+          if (p <= 0) return;
+          var color = 'rgba(34,197,94,0.75)';
+          drawPolyProgress(c, a.pts, easeOutCubic(p), color, a.lw);
+          if (p >= 1) {
+            var pop = staticMode ? 1 : Math.min((tc - a.delay - a.dur) / 0.25, 1);
+            if (pop > 0) {
+              drawArrowhead(c, a.pts[a.pts.length - 1], a.pts[a.pts.length - 3], 13 * pop, color, a.lw);
+            }
+          }
+        });
+        c.globalAlpha = 1;
+      });
+
+      /* --- Quant system: abstract polygon mesh / neural wireframe --- */
+      runScene('bg-quant', function (w, h) {
+        var count = Math.max(20, Math.min(38, Math.round(w / 32)));
+        var pts = [];
+        for (var i = 0; i < count; i++) {
+          pts.push({
+            x: Math.random() * w,
+            y: Math.random() * h,
+            vx: (Math.random() - 0.5) * 22,
+            vy: (Math.random() - 0.5) * 22
+          });
+        }
+        return {
+          pts: pts,
+          link: Math.min(170, Math.max(110, w * 0.14)),
+          last: 0
+        };
+      }, function (c, s, t, w, h, staticMode) {
+        /* advance drifting vertices */
+        var dt = staticMode ? 0 : Math.max(0, Math.min(t - s.last, 0.05));
+        s.last = t;
+        s.pts.forEach(function (p) {
+          p.x += p.vx * dt; p.y += p.vy * dt;
+          if (p.x < 0) { p.x = 0; p.vx = Math.abs(p.vx); }
+          if (p.x > w) { p.x = w; p.vx = -Math.abs(p.vx); }
+          if (p.y < 0) { p.y = 0; p.vy = Math.abs(p.vy); }
+          if (p.y > h) { p.y = h; p.vy = -Math.abs(p.vy); }
+        });
+
+        var fadeIn = staticMode ? 1 : Math.min(1, t / 0.9);
+        var L = s.link, L2 = L * L;
+        var n = s.pts.length;
+
+        /* neighbour pairs within link distance */
+        var pairs = [];
+        for (var i = 0; i < n; i++) {
+          for (var j = i + 1; j < n; j++) {
+            var dx = s.pts[i].x - s.pts[j].x, dy = s.pts[i].y - s.pts[j].y;
+            var d2 = dx * dx + dy * dy;
+            if (d2 < L2) pairs.push([i, j, Math.sqrt(d2)]);
+          }
+        }
+
+        /* faint triangle fills where three vertices are mutually linked */
+        var linked = {};
+        pairs.forEach(function (pr) { linked[pr[0] + '-' + pr[1]] = true; });
+        c.fillStyle = 'rgba(245,158,11,' + (0.045 * fadeIn) + ')';
+        for (var a = 0; a < n; a++) {
+          for (var b = a + 1; b < n; b++) {
+            if (!linked[a + '-' + b]) continue;
+            for (var k = b + 1; k < n; k++) {
+              if (linked[a + '-' + k] && linked[b + '-' + k]) {
+                c.beginPath();
+                c.moveTo(s.pts[a].x, s.pts[a].y);
+                c.lineTo(s.pts[b].x, s.pts[b].y);
+                c.lineTo(s.pts[k].x, s.pts[k].y);
+                c.closePath();
+                c.fill();
+              }
+            }
+          }
+        }
+
+        /* wireframe edges, stronger when vertices are closer */
+        pairs.forEach(function (pr) {
+          var alpha = (1 - pr[2] / L) * 0.35 * fadeIn;
+          c.strokeStyle = 'rgba(217,119,6,' + alpha + ')';
+          c.lineWidth = 1;
+          c.beginPath();
+          c.moveTo(s.pts[pr[0]].x, s.pts[pr[0]].y);
+          c.lineTo(s.pts[pr[1]].x, s.pts[pr[1]].y);
+          c.stroke();
+        });
+
+        /* vertices */
+        s.pts.forEach(function (p, i) {
+          var r = staticMode ? 2 : 2 + Math.sin(t * 1.6 + i * 2.1) * 0.5;
+          c.fillStyle = 'rgba(245,158,11,' + (0.6 * fadeIn) + ')';
+          c.beginPath(); c.arc(p.x, p.y, r, 0, Math.PI * 2); c.fill();
+        });
+      });
+
+      /* ---------- Contact form ---------- */
+      var form = document.getElementById('contact-form');
+      var status = document.getElementById('form-status');
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        var data = new FormData(form);
+        try {
+          var res = await fetch(form.action, {
+            method: 'POST',
+            body: data,
+            headers: { 'Accept': 'application/json' }
+          });
+          if (res.ok) {
+            status.textContent = "Thanks for reaching out. We'll get back to you within one business day.";
+            status.className = 'success-message';
+            form.reset();
+          } else {
+            throw new Error();
+          }
+        } catch (err) {
+          status.textContent = 'Something went wrong sending your message. Email us directly instead.';
+          status.className = 'error-message';
+        }
+      });
+    })();
   </script>
 </body>
 </html>
