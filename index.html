@@ -3,127 +3,419 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coming Soon: Market Canvas</title>
+  <title>DOJi | Product Development Studio</title>
+  <meta name="description" content="DOJi is a product development studio that designs, builds, and operates full-stack web products: marketplaces, payment systems, real-time platforms, and trading infrastructure.">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+
+  <meta property="og:title" content="DOJi | Product Development Studio">
+  <meta property="og:description" content="We build production software end to end: marketplaces, payments, real-time platforms, and trading infrastructure.">
+  <meta property="og:image" content="https://www.dojiverse.com/assets/doji-logo.png">
+  <meta property="og:url" content="https://www.dojiverse.com">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
   <style>
+    :root {
+      --ink: #111827;
+      --ink-soft: #4b5563;
+      --ink-faint: #6b7280;
+      --bg: #ffffff;
+      --bg-alt: #f8fafc;
+      --line: #e5e7eb;
+      --accent: #1e293b;
+      --accent-hover: #334155;
+      --accent-soft: #eef2f7;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: 'Segoe UI', Arial, sans-serif;
-      color: #fff;
-      /* Stock market chart background pattern */
-      background: url('ChatGPT Image May 28, 2025, 03_31_25 AM.png') no-repeat center center fixed;
-      background-size: cover;
-      position: relative;
+      font-family: 'Inter', -apple-system, 'Segoe UI', Arial, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
     }
-    .overlay {
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0, 0, 0, 0.7);
-      z-index: 1;
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    .wrap { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+
+    /* Nav */
+    header {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--line);
     }
-    .container {
-      position: relative;
-      z-index: 2;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      text-align: center;
+    .nav {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px;
     }
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 2rem;
-      letter-spacing: 2px;
-      text-shadow: 0 2px 8px #000;
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.15rem; letter-spacing: 0.5px; }
+    .brand img { height: 34px; width: 34px; object-fit: contain; }
+    .nav-links { display: flex; gap: 28px; font-size: 0.92rem; font-weight: 500; color: var(--ink-soft); }
+    .nav-links a:hover { color: var(--ink); }
+    .nav-cta {
+      background: var(--accent); color: #fff; font-size: 0.88rem; font-weight: 600;
+      padding: 8px 16px; border-radius: 8px; transition: background 0.2s;
     }
-    .slideshow {
-      background: rgba(20, 20, 40, 0.7);
-      border-radius: 16px;
-      padding: 2.5rem 2.5rem 1.5rem 2.5rem;
-      box-shadow: 0 4px 32px rgba(0,0,0,0.4);
-      max-width: 900px;
-      width: 90vw;
+    .nav-cta:hover { background: var(--accent-hover); }
+    @media (max-width: 640px) { .nav-links { display: none; } }
+
+    /* Hero */
+    .hero { padding: 88px 0 64px; }
+    .hero-kicker {
+      display: inline-block; font-size: 0.8rem; font-weight: 600; letter-spacing: 1.2px;
+      text-transform: uppercase; color: var(--ink-faint);
+      border: 1px solid var(--line); border-radius: 999px; padding: 4px 14px; margin-bottom: 22px;
     }
-    .slideshow img {
-      width: 100%;
-      height: 500px;
-      object-fit: contain;
-      border-radius: 12px;
-      margin-bottom: 1rem;
-      box-shadow: 0 2px 12px #0008;
-      background: #222; /* fallback for transparent images */
+    .hero h1 { font-size: clamp(2.1rem, 5vw, 3.2rem); font-weight: 800; letter-spacing: -0.02em; line-height: 1.15; max-width: 720px; }
+    .hero p { margin-top: 20px; font-size: 1.12rem; color: var(--ink-soft); max-width: 640px; }
+    .hero-ctas { margin-top: 32px; display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 22px; border-radius: 10px; font-weight: 600; font-size: 0.95rem;
+      transition: all 0.2s;
     }
-    .caption {
-      font-size: 1.1rem;
-      margin-bottom: 1rem;
-      color: #e0e0e0;
-      min-height: 2.5em;
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: var(--accent-hover); }
+    .btn-ghost { border: 1px solid var(--line); color: var(--ink); }
+    .btn-ghost:hover { background: var(--bg-alt); }
+
+    /* Stats */
+    .stats { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--bg-alt); }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); }
+    .stat { padding: 28px 12px; text-align: center; }
+    .stat + .stat { border-left: 1px solid var(--line); }
+    .stat .num { font-size: 1.55rem; font-weight: 800; letter-spacing: -0.01em; }
+    .stat .label { font-size: 0.82rem; color: var(--ink-faint); margin-top: 2px; }
+    @media (max-width: 640px) {
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .stat:nth-child(3) { border-left: none; }
+      .stat:nth-child(n+3) { border-top: 1px solid var(--line); }
     }
-    .slideshow-controls {
-      display: flex;
-      justify-content: center;
-      gap: 1.5rem;
+
+    /* Sections */
+    section { padding: 80px 0; }
+    .section-alt { background: var(--bg-alt); }
+    .section-head h2 { font-size: 1.8rem; font-weight: 800; letter-spacing: -0.01em; }
+    .section-head p { margin-top: 8px; color: var(--ink-soft); max-width: 620px; }
+
+    /* Work */
+    .work-grid { margin-top: 44px; display: flex; flex-direction: column; gap: 56px; }
+    .project {
+      display: grid; grid-template-columns: 1.15fr 1fr; gap: 40px; align-items: center;
     }
-    .slideshow-controls button {
-      background: #1e293b;
-      color: #fff;
-      border: none;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      font-size: 1.5rem;
-      cursor: pointer;
-      transition: background 0.2s;
+    .project:nth-child(even) .project-media { order: 2; }
+    @media (max-width: 768px) {
+      .project { grid-template-columns: 1fr; gap: 20px; }
+      .project:nth-child(even) .project-media { order: 0; }
     }
-    .slideshow-controls button:hover {
-      background: #334155;
+    .project-media {
+      border: 1px solid var(--line); border-radius: 14px; overflow: hidden;
+      background: #fff; box-shadow: 0 8px 30px rgba(17,24,39,0.06);
     }
-    /* Contact Us button styles */
-    .contact-btn {
-      position: absolute;
-      top: 32px;
-      right: 48px;
-      z-index: 10;
-      background: #1e293b;
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      padding: 0.7rem 1.5rem;
-      font-size: 1.1rem;
-      font-family: inherit;
-      cursor: pointer;
-      box-shadow: 0 2px 8px #0006;
-      transition: background 0.2s;
+    .project-media img { width: 100%; aspect-ratio: 16/10; object-fit: cover; object-position: top; }
+    .project-media img.contain { object-fit: contain; padding: 12px; }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+    .tag {
+      font-size: 0.74rem; font-weight: 600; color: var(--ink-soft);
+      background: var(--accent-soft); border-radius: 999px; padding: 4px 11px;
     }
-    .contact-btn:hover {
-      background: #334155;
+    .project h3 { font-size: 1.35rem; font-weight: 700; }
+    .project .sub { font-size: 0.92rem; color: var(--ink-faint); margin-top: 2px; }
+    .project p.desc { margin-top: 12px; color: var(--ink-soft); font-size: 0.98rem; }
+    .project-links { margin-top: 16px; display: flex; gap: 18px; font-size: 0.92rem; font-weight: 600; }
+    .project-links a { color: var(--accent); border-bottom: 1px solid transparent; }
+    .project-links a:hover { border-bottom-color: var(--accent); }
+
+    /* Services */
+    .services-grid { margin-top: 44px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; }
+    @media (max-width: 700px) { .services-grid { grid-template-columns: 1fr; } }
+    .service {
+      background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 28px;
     }
-    @media (max-width: 600px) {
-      .slideshow {
-        padding: 1rem 0.5rem 0.5rem 0.5rem;
-        max-width: 95vw;
-      }
-      h1 {
-        font-size: 1.5rem;
-      }
+    .service h3 { font-size: 1.08rem; font-weight: 700; }
+    .service p { margin-top: 8px; font-size: 0.94rem; color: var(--ink-soft); }
+
+    /* About */
+    .about-inner { display: grid; grid-template-columns: auto 1fr; gap: 36px; align-items: start; }
+    @media (max-width: 640px) { .about-inner { grid-template-columns: 1fr; } }
+    .about-logo {
+      width: 120px; height: 120px; border: 1px solid var(--line); border-radius: 20px;
+      background: #fff; display: flex; align-items: center; justify-content: center;
     }
+    .about-logo img { width: 84px; height: 84px; object-fit: contain; }
+    .about-text p { color: var(--ink-soft); max-width: 640px; }
+    .about-text p + p { margin-top: 14px; }
+
+    /* Contact */
+    .contact-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-top: 40px; }
+    @media (max-width: 700px) { .contact-inner { grid-template-columns: 1fr; } }
+    .contact-side p { color: var(--ink-soft); }
+    .contact-side .line { margin-top: 18px; font-size: 0.95rem; }
+    .contact-side .line a { color: var(--accent); font-weight: 600; }
+    form { display: flex; flex-direction: column; gap: 14px; }
+    label { font-size: 0.85rem; font-weight: 600; }
+    input, textarea {
+      width: 100%; padding: 11px 14px; border: 1px solid var(--line); border-radius: 10px;
+      font-family: inherit; font-size: 0.95rem; background: #fff; color: var(--ink);
+    }
+    input:focus, textarea:focus { outline: 2px solid var(--accent); outline-offset: 0; border-color: transparent; }
+    textarea { min-height: 130px; resize: vertical; }
+    .success-message { color: #15803d; font-size: 0.92rem; }
+    .error-message { color: #b91c1c; font-size: 0.92rem; }
+
+    /* Footer */
+    footer { border-top: 1px solid var(--line); padding: 34px 0; }
+    .footer-inner {
+      display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;
+      font-size: 0.86rem; color: var(--ink-faint);
+    }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a:hover { color: var(--ink); }
   </style>
 </head>
 <body>
-  <a href="contact.html" class="contact-btn">Contact Us</a>
-  <div class="overlay"></div>
-  <div class="container">
-    <h1>Coming Soon: Market Canvas</h1>
-    <div class="slideshow">
-      <img id="slideshow-img" src="" alt="Slideshow image">
-      <div class="caption" id="slideshow-caption"></div>
-      <div class="slideshow-controls">
-        <button id="prev-btn" aria-label="Previous">&#8592;</button>
-        <button id="next-btn" aria-label="Next">&#8594;</button>
+
+  <header>
+    <div class="wrap nav">
+      <a href="#" class="brand">
+        <img src="assets/doji-logo.png" alt="DOJi logo">
+        DOJi
+      </a>
+      <nav class="nav-links">
+        <a href="#work">Work</a>
+        <a href="#services">Services</a>
+        <a href="#about">About</a>
+      </nav>
+      <a href="#contact" class="nav-cta">Start a project</a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="wrap">
+      <span class="hero-kicker">Product Development Studio</span>
+      <h1>We build production software, end to end.</h1>
+      <p>
+        DOJi is the development studio behind MarketCanvas, ClipExchange, and a fully automated
+        trading system. We take products from architecture to launch and beyond: frontend, backend,
+        payments, security, and operations.
+      </p>
+      <div class="hero-ctas">
+        <a href="#work" class="btn btn-primary">See our work</a>
+        <a href="#contact" class="btn btn-ghost">Start a project</a>
       </div>
     </div>
+  </section>
+
+  <div class="stats">
+    <div class="wrap stats-grid">
+      <div class="stat"><div class="num">3</div><div class="label">Products shipped to production</div></div>
+      <div class="stat"><div class="num">150K+</div><div class="label">Lines of production code</div></div>
+      <div class="stat"><div class="num">70+</div><div class="label">Cloud &amp; edge functions deployed</div></div>
+      <div class="stat"><div class="num">Full Stripe</div><div class="label">Checkout · Billing · Connect · Escrow</div></div>
+    </div>
   </div>
-  <script src="slideshow.js"></script>
+
+  <section id="work">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Our work</h2>
+        <p>Products we designed, built, and operate ourselves. Every system below runs in production.</p>
+      </div>
+
+      <div class="work-grid">
+
+        <div class="project">
+          <a class="project-media" href="https://www.marketcanvas.com" target="_blank" rel="noopener noreferrer">
+            <img src="assets/marketcanvas-hero.png" alt="MarketCanvas charting editor">
+          </a>
+          <div>
+            <div class="project-tags">
+              <span class="tag">SaaS</span><span class="tag">HTML5 Canvas</span><span class="tag">Firebase</span><span class="tag">Stripe Connect</span>
+            </div>
+            <h3>MarketCanvas</h3>
+            <div class="sub">Financial charting, marketplace &amp; education platform · 112K+ LOC</div>
+            <p class="desc">
+              A platform where traders draw, share, and sell candlestick chart patterns. Built on a
+              custom HTML5 Canvas engine with real-time multi-user collaboration, a two-sided
+              marketplace with creator payouts through Stripe Connect, and a course platform with
+              interactive video assessments students answer by drawing.
+            </p>
+            <div class="project-links">
+              <a href="https://www.marketcanvas.com" target="_blank" rel="noopener noreferrer">Visit marketcanvas.com &rarr;</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="project">
+          <a class="project-media" href="https://www.clipexchange.com" target="_blank" rel="noopener noreferrer">
+            <img src="assets/clipexchange-hero.png" alt="ClipExchange creator marketplace">
+          </a>
+          <div>
+            <div class="project-tags">
+              <span class="tag">Marketplace</span><span class="tag">React</span><span class="tag">Supabase</span><span class="tag">Stripe Escrow</span>
+            </div>
+            <h3>ClipExchange</h3>
+            <div class="sub">Two-sided creator content marketplace · 18K+ LOC</div>
+            <p class="desc">
+              A marketplace connecting brands with verified social media creators. Escrow-style
+              payments with Stripe manual capture protect buyers until creators deliver, Instagram
+              and TikTok accounts are verified through an automated bio-challenge flow, and orders,
+              messaging, and payouts run through a hardened PostgreSQL backend.
+            </p>
+            <div class="project-links">
+              <a href="https://www.clipexchange.com" target="_blank" rel="noopener noreferrer">Visit clipexchange.com &rarr;</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="project">
+          <div class="project-media">
+            <img src="assets/quant-architecture.png" alt="Quantitative trading system architecture" class="contain">
+          </div>
+          <div>
+            <div class="project-tags">
+              <span class="tag">Automation</span><span class="tag">TypeScript</span><span class="tag">PostgreSQL</span><span class="tag">AWS</span>
+            </div>
+            <h3>Automated Trading System</h3>
+            <div class="sub">Internal quantitative trading product · live capital</div>
+            <p class="desc">
+              A fully automated long/short trading system built on statistical edge from 3 years of
+              classified market data. Fifteen serverless functions orchestrate data ingestion, signal
+              detection, and execution across two broker APIs, with position sizing validated through
+              10,000-iteration Monte Carlo simulation. It trades autonomously from pre-market to close.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="services" class="section-alt">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>What we build for clients</h2>
+        <p>The same systems we build for ourselves, built for you.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service">
+          <h3>Full-stack product development</h3>
+          <p>From idea to production: system architecture, frontend, backend, deployment, and post-launch operations. One team owns the whole build.</p>
+        </div>
+        <div class="service">
+          <h3>Marketplaces &amp; payments</h3>
+          <p>Two-sided platforms with Stripe Checkout, Billing, and Connect: seller onboarding, escrow-style flows, payouts, subscriptions, and webhook infrastructure.</p>
+        </div>
+        <div class="service">
+          <h3>Real-time &amp; data-intensive systems</h3>
+          <p>Live collaboration, messaging, notifications, and analytics on PostgreSQL, Firebase, and Supabase backends with security rules written for production.</p>
+        </div>
+        <div class="service">
+          <h3>Automation &amp; trading infrastructure</h3>
+          <p>Data pipelines, scheduled jobs, broker and market-data API integrations, and execution systems that run unattended on real money.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="wrap">
+      <div class="section-head"><h2>About DOJi</h2></div>
+      <div class="about-inner" style="margin-top: 36px;">
+        <div class="about-logo"><img src="assets/doji-logo.png" alt="DOJi bear logo"></div>
+        <div class="about-text">
+          <p>
+            DOJi LLC is a Virginia-based development studio founded and led by Pedro Petcov
+            (B.S. Computer Science, NYU Shanghai). Every engagement gets founder-level ownership:
+            the person who designs your architecture also writes the code, wires the payments,
+            hardens the security, and stays for operations after launch.
+          </p>
+          <p>
+            The studio has shipped three production products, run a 3-person engineering internship
+            program with structured code review, and builds with AI-accelerated development workflows
+            to deliver at a pace small teams normally can't.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="section-alt">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Start a project</h2>
+        <p>Tell us what you're building. We'll reply with an honest read on scope, timeline, and whether we're the right fit.</p>
+      </div>
+      <div class="contact-inner">
+        <div class="contact-side">
+          <p>
+            Best suited for: marketplaces, SaaS products, payment integrations, real-time platforms,
+            and data or trading infrastructure.
+          </p>
+          <div class="line">Email: <a href="mailto:petcovpedro@gmail.com">petcovpedro@gmail.com</a></div>
+          <div class="line">GitHub: <a href="https://github.com/Dojiverse" target="_blank" rel="noopener noreferrer">github.com/Dojiverse</a></div>
+        </div>
+        <form id="contact-form" action="https://formspree.io/f/xjvnlqzq" method="POST">
+          <div>
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required>
+          </div>
+          <div>
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+          <div>
+            <label for="message">What are you building?</label>
+            <textarea id="message" name="message" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="border: none; cursor: pointer; justify-content: center;">Send message</button>
+          <div id="form-status"></div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap footer-inner">
+      <div>&copy; 2026 DOJi LLC · Reston, Virginia</div>
+      <div class="footer-links">
+        <a href="https://www.marketcanvas.com" target="_blank" rel="noopener noreferrer">MarketCanvas</a>
+        <a href="https://www.clipexchange.com" target="_blank" rel="noopener noreferrer">ClipExchange</a>
+        <a href="https://github.com/Dojiverse" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const form = document.getElementById('contact-form');
+    const status = document.getElementById('form-status');
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const data = new FormData(form);
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: data,
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          status.textContent = "Thanks for reaching out. We'll get back to you within one business day.";
+          status.className = 'success-message';
+          form.reset();
+        } else {
+          throw new Error();
+        }
+      } catch {
+        status.textContent = 'Something went wrong sending your message. Email us directly instead.';
+        status.className = 'error-message';
+      }
+    });
+  </script>
 </body>
 </html>
