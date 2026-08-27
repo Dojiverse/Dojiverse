@@ -584,7 +584,12 @@
           <div class="line">Email: <a href="mailto:pedropetcov@dojiverse.com">pedropetcov@dojiverse.com</a></div>
           <div class="line">GitHub: <a href="https://github.com/Dojiverse" target="_blank" rel="noopener noreferrer">github.com/Dojiverse</a></div>
         </div>
-        <form id="contact-form" action="https://formspree.io/f/xjvnlqzq" method="POST" class="reveal" style="--d:.1s">
+        <form id="contact-form" action="https://espqlcmrmfswgzejnllj.supabase.co/functions/v1/send-inquiry" method="POST" class="reveal" style="--d:.1s">
+          <!-- honeypot: hidden from humans, bots fill it and get silently dropped -->
+          <div style="position:absolute;left:-9999px;" aria-hidden="true">
+            <label for="website">Website</label>
+            <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+          </div>
           <div>
             <label for="name">Name</label>
             <input type="text" id="name" name="name" required>
@@ -1323,24 +1328,34 @@
       var status = document.getElementById('form-status');
       form.addEventListener('submit', async function (e) {
         e.preventDefault();
-        var data = new FormData(form);
+        var submitBtn = form.querySelector('button[type="submit"]');
+        submitBtn.disabled = true;
+        status.textContent = 'Sending…';
+        status.className = '';
         try {
           var res = await fetch(form.action, {
             method: 'POST',
-            body: data,
-            headers: { 'Accept': 'application/json' }
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              name: form.elements['name'].value,
+              email: form.elements['email'].value,
+              message: form.elements['message'].value,
+              website: form.elements['website'].value
+            })
           });
-          if (res.ok) {
+          var out = await res.json().catch(function () { return {}; });
+          if (res.ok && out.ok) {
             status.textContent = "Thanks for reaching out. We'll get back to you within one business day.";
             status.className = 'success-message';
             form.reset();
           } else {
-            throw new Error();
+            throw new Error(out.error || 'send failed');
           }
         } catch (err) {
           status.textContent = 'Something went wrong sending your message. Email us directly instead.';
           status.className = 'error-message';
         }
+        submitBtn.disabled = false;
       });
     })();
   </script>
