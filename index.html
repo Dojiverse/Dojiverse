@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>DOJi | Product Development Studio</title>
-  <meta name="description" content="DOJi is a product development studio that designs, builds, and operates full-stack web products: marketplaces, payment systems, real-time platforms, and trading infrastructure.">
+  <meta name="description" content="DOJi is a product development studio that designs, builds, and operates full-stack web products: marketplaces, payment systems, real-time platforms, trading infrastructure, and tax-aware financial engines.">
   <link rel="icon" type="image/png" href="assets/favicon.png">
 
   <meta property="og:title" content="DOJi | Product Development Studio">
-  <meta property="og:description" content="We build production software end to end: marketplaces, payments, real-time platforms, and trading infrastructure.">
+  <meta property="og:description" content="We build production software end to end: marketplaces, payments, real-time platforms, trading infrastructure, and financial engines.">
   <meta property="og:image" content="https://www.dojiverse.com/assets/doji-logo.png">
   <meta property="og:url" content="https://www.dojiverse.com">
   <meta property="og:type" content="website">
@@ -181,6 +181,7 @@
     .glow-emerald:hover { box-shadow: 0 18px 44px rgba(16,185,129,0.22); }
     .glow-indigo:hover  { box-shadow: 0 18px 44px rgba(99,102,241,0.22); }
     .glow-amber:hover   { box-shadow: 0 18px 44px rgba(245,158,11,0.22); }
+    .glow-blue:hover    { box-shadow: 0 18px 44px rgba(37,99,235,0.22); }
     .browser-bar {
       display: flex; align-items: center; gap: 10px;
       padding: 9px 14px; background: var(--bg-alt); border-bottom: 1px solid var(--line);
@@ -336,9 +337,10 @@
       </span>
       <h1>We build production software, <span class="accent-word">end to end</span>.</h1>
       <p>
-        DOJi is the development studio behind MarketCanvas, ClipExchange, and a fully automated
-        trading system. We take products from architecture to launch and beyond: frontend, backend,
-        payments, security, and operations.
+        DOJi is the development studio behind MarketCanvas, ClipExchange, a fully automated
+        trading system, and Meridian, a tax-aware rebalancing engine for wealth management. We take
+        products from architecture to launch and beyond: frontend, backend, payments, security, and
+        operations.
       </p>
       <div class="hero-ctas">
         <a href="#work" class="btn btn-primary">See our work</a>
@@ -349,7 +351,7 @@
 
   <div class="stats">
     <div class="wrap stats-grid">
-      <div class="stat"><div class="num" data-count="3">0</div><div class="label">Products in production</div></div>
+      <div class="stat"><div class="num" data-count="4">0</div><div class="label">Systems in production</div></div>
       <div class="stat"><div class="num" data-count="70" data-suffix="+">0</div><div class="label">Cloud &amp; edge functions deployed</div></div>
       <div class="stat"><div class="num" data-count="10" data-suffix="+">0</div><div class="label">Third-party API integrations</div></div>
       <div class="stat"><div class="num" data-count="4">0</div><div class="label">Stripe products: Checkout · Billing · Connect · Escrow</div></div>
@@ -462,6 +464,40 @@
           </div>
         </div>
 
+        <div class="project reveal">
+          <canvas class="project-bg" id="bg-meridian" aria-hidden="true"></canvas>
+          <div class="project-media-col">
+            <a class="browser-frame glow-blue" href="https://pedropetcov.com/blotter" target="_blank" rel="noopener noreferrer">
+              <div class="browser-bar">
+                <div class="browser-dots"><i></i><i></i><i></i></div>
+                <div class="browser-url">pedropetcov.com/blotter</div>
+              </div>
+              <img src="assets/meridian-hero.svg" alt="Meridian drift report with a blocked gold sale">
+            </a>
+          </div>
+          <div class="project-info">
+            <div class="project-tags">
+              <span class="tag">Wealth management</span><span class="tag">Tax-aware rebalancing</span><span class="tag">Compliance</span>
+            </div>
+            <h3>Meridian</h3>
+            <div class="stack">Python · FastAPI · Pydantic · Hypothesis · Docker · Google Cloud Run · GitHub Actions · React</div>
+            <div class="sub">Tax-aware rebalancing engine for registered investment advisers · live demo</div>
+            <p class="desc">
+              An engine that keeps a client's portfolio on target without creating tax bills it did
+              not need to. It chooses which tax lots to sell, screens every sale against the IRS
+              wash-sale rule across the whole household, harvests losses when they are worth taking,
+              runs the result through the client's investment policy, and records every decision in a
+              hash-chained audit log. Exact decimal arithmetic end to end, 400 property-based tests,
+              and a two-year synthetic history the engine ran itself.
+            </p>
+            <div class="project-links">
+              <a href="https://pedropetcov.com/blotter" target="_blank" rel="noopener noreferrer">Try the live demo &rarr;</a>
+              <a href="https://pedropetcov.com/meridian" target="_blank" rel="noopener noreferrer">Case study &rarr;</a>
+              <a href="https://github.com/Dojiverse/Meridian" target="_blank" rel="noopener noreferrer">Source &rarr;</a>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
@@ -521,7 +557,7 @@
             <div class="service-index">04</div>
           </div>
           <h3>Automation &amp; trading infrastructure</h3>
-          <p>Data pipelines, scheduled jobs, broker and market-data API integrations, and execution systems that run unattended on real money.</p>
+          <p>Data pipelines, scheduled jobs, broker and market-data API integrations, execution systems that run unattended on real money, and tax-aware portfolio engines built to the regulations.</p>
         </div>
       </div>
     </div>
@@ -550,7 +586,7 @@
             hardens the security, and stays for operations after launch.
           </p>
           <p>
-            The studio has shipped three production products, run a 3-person engineering internship
+            The studio has shipped four production systems, run a 3-person engineering internship
             program with structured code review, and builds with AI-accelerated development workflows
             to deliver at a pace small teams normally can't.
           </p>
@@ -615,6 +651,7 @@
       <div class="footer-links">
         <a href="https://www.marketcanvas.com" target="_blank" rel="noopener noreferrer">MarketCanvas</a>
         <a href="https://www.clipexchange.com" target="_blank" rel="noopener noreferrer">ClipExchange</a>
+        <a href="https://pedropetcov.com/blotter" target="_blank" rel="noopener noreferrer">Meridian</a>
         <a href="https://github.com/Dojiverse" target="_blank" rel="noopener noreferrer">GitHub</a>
       </div>
     </div>
@@ -1321,6 +1358,80 @@
           c.fillStyle = 'rgba(245,158,11,' + (0.6 * fadeIn) + ')';
           c.beginPath(); c.arc(p.x, p.y, r, 0, Math.PI * 2); c.fill();
         });
+      });
+
+      /* --- Meridian: a tolerance band, a drift out of it, a block, a correction --- */
+      runScene('bg-meridian', function (w, h) {
+        var mid = h * 0.5, half = h * 0.13;
+        var n = 26, pts = [], y = mid + (Math.random() - 0.5) * half * 0.6;
+        var breachAt = Math.round(n * 0.62);
+        for (var i = 0; i <= n; i++) {
+          var x = w * 0.04 + (w * 0.92) * (i / n);
+          if (i < breachAt) {
+            y += (Math.random() - 0.5) * half * 0.5;
+            y = Math.max(mid - half * 0.85, Math.min(mid + half * 0.85, y));
+          } else if (i === breachAt) {
+            y = mid - half * 1.45; /* out the top of the band */
+          } else {
+            y += (Math.random() - 0.5) * half * 0.3;
+            y = Math.min(y, mid - half * 1.15);
+          }
+          pts.push([x, y]);
+        }
+        var breach = pts[breachAt];
+        var back = [breach[0] + w * 0.06, mid + half * 0.2]; /* where the correction lands */
+        return { mid: mid, half: half, pts: pts, breachAt: breachAt, breach: breach, back: back, cycle: 10 };
+      }, function (c, s, t, w, h, staticMode) {
+        var tc = staticMode ? 99 : t % s.cycle;
+        var fade = staticMode ? 1 : Math.min(1, Math.max(0, (s.cycle - tc) / 0.8));
+        c.globalAlpha = 0.55 * fade;
+
+        /* the band: target line and two dashed edges */
+        c.setLineDash([5, 6]);
+        c.strokeStyle = 'rgba(37,99,235,0.45)'; c.lineWidth = 1.2;
+        [s.mid - s.half, s.mid + s.half].forEach(function (yy) {
+          c.beginPath(); c.moveTo(w * 0.02, yy); c.lineTo(w * 0.98, yy); c.stroke();
+        });
+        c.setLineDash([]);
+        c.strokeStyle = 'rgba(37,99,235,0.25)'; c.lineWidth = 1;
+        c.beginPath(); c.moveTo(w * 0.02, s.mid); c.lineTo(w * 0.98, s.mid); c.stroke();
+
+        /* the portfolio's path, drawn over ~3s */
+        var p = staticMode ? 1 : Math.max(0, Math.min(tc / 3.0, 1));
+        var tip = drawPolyProgress(c, s.pts, easeOutCubic(p), 'rgba(37,99,235,0.7)', 2);
+        if (p < 1) {
+          c.fillStyle = 'rgba(37,99,235,0.9)';
+          c.beginPath(); c.arc(tip[0], tip[1], 3, 0, Math.PI * 2); c.fill();
+        }
+
+        /* once past the band edge: a red block marker where the breach was caught */
+        var breachProgress = s.breachAt / s.pts.length;
+        var since = staticMode ? 9 : (p >= 1 ? tc - 3.0 : (easeOutCubic(p) > breachProgress ? 0.01 : -1));
+        if (since >= 0) {
+          var pop = Math.min(since / 0.3, 1);
+          c.fillStyle = 'rgba(239,68,68,0.85)';
+          c.beginPath(); c.arc(s.breach[0], s.breach[1], 5 * pop, 0, Math.PI * 2); c.fill();
+          var pr = (since * 0.6) % 1;
+          c.strokeStyle = 'rgba(239,68,68,' + (0.5 * (1 - pr)) + ')'; c.lineWidth = 2;
+          c.beginPath(); c.arc(s.breach[0], s.breach[1], 7 + pr * 22, 0, Math.PI * 2); c.stroke();
+        }
+
+        /* after the path finishes: the correction, a green line back inside the band */
+        var corr = staticMode ? 1 : Math.max(0, Math.min((tc - 3.6) / 0.9, 1));
+        if (corr > 0) {
+          var from = s.pts[s.pts.length - 1];
+          var ex = from[0] + (s.back[0] - from[0]) * easeOutCubic(corr);
+          var ey = from[1] + (s.back[1] - from[1]) * easeOutCubic(corr);
+          c.strokeStyle = 'rgba(5,150,105,0.8)'; c.lineWidth = 2.5; c.lineCap = 'round';
+          c.beginPath(); c.moveTo(from[0], from[1]); c.lineTo(ex, ey); c.stroke();
+          if (corr >= 1) {
+            drawArrowhead(c, s.back, from, 10, 'rgba(5,150,105,0.8)', 2.5);
+          } else {
+            c.fillStyle = 'rgba(5,150,105,0.9)';
+            c.beginPath(); c.arc(ex, ey, 3, 0, Math.PI * 2); c.fill();
+          }
+        }
+        c.globalAlpha = 1;
       });
 
       /* ---------- Contact form ---------- */
